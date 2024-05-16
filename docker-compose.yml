@@ -1,0 +1,25 @@
+# !!!!!!!!!!!!!!!
+# EDIT ALL USERS AND PASSWORDS FOR PRODUCTION
+# !!!!!!!!!!!!!!!
+
+services:
+  db:
+    image: mysql:latest
+    container_name: db-seguinleo-notes
+    volumes:
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: seguinleo-notes
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+
+  web:
+    container_name: web-seguinleo-notes
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8787:80"
